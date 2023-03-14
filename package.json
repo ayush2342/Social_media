@@ -1,0 +1,17 @@
+{
+  "name": "social_code",
+  "version": "1.0.0",
+  "description": "My social media wep Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "social"
+  ],
+  "author": "Ayush Sharma",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
