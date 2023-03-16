@@ -1,4 +1,6 @@
 module.exports.profile = function(req,res)
 {
-    res.end('<h1>User Profile Page is loaded')
+    res.render('./users',{
+        title:'Users'
+    })
 }
