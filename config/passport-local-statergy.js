@@ -79,14 +79,14 @@ passport.setAuthenticatedUser = function(req,res,next)
 
 passport.restrictAccess = function( req, res, next)
 {
-    //if the user is signed in then pass on the request to next function(Controller's action)
-    if(!req.isAuthenticated())
+   
+    if(req.isAuthenticated())
     {
-       return next();
+       
+       return res.redirect('/users/profile');
     }
 
-    //if the user is not signed in
-    return res.redirect('back');
+    next();
 }
 
 
