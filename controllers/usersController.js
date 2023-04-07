@@ -65,3 +65,17 @@ module.exports.createSession=function(req,res)
 {
     return res.redirect('/users/profile');
 }
+
+module.exports.destroySession=function(req,res)
+{
+   req.logout(function(error)
+   {
+      if(error)
+      {
+         return console.log('Error while signing out');
+      }
+
+      return res.redirect('/users/Signin');
+   });
+    
+}
