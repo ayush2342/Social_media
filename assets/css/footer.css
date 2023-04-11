@@ -1,0 +1,15 @@
+.footer-main-div {
+  width: 100%;
+  background-color: #757475;
+  display: flex;
+  flex-wrap: wrap;
+  color: white;
+  padding: 0 10px;
+}
+.footer-main-div li {
+  display: inline-block;
+  margin-right: 10px;
+}
+.footer-main-div a {
+  color: inherit;
+}
