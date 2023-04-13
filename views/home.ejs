@@ -1,2 +1,26 @@
 <link rel="stylesheet" href="/css/home.css">
-    <h1><%=title%> is Rendered</h1>
+    <h1><%=title%></h1>
+
+    <section id="feed-posts">
+        <h2>Posts</h2>
+        <form action='posts/create' id="new-post-form" method="post">
+            <textarea name="content" cols="30" rows="3" placeholder="Type Here...."></textarea>
+            <input type="submit" value="Post">
+        </form>
+    <div id="post-div-container">
+        <ul>
+            <%for(let i of posts){%>
+                <li>
+                    <p> 
+                        <%=i.content%> <br>
+                        <%=i.user.name%>
+                    </p>
+                   
+                </li>
+               
+                <%}%>
+        </ul>
+        
+    </div>
+   
+</section>
