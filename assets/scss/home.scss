@@ -12,4 +12,30 @@ h1{
 {
     padding-left: 10px;
     color: seashell;
+
+    #post-div-container
+    {
+        ul
+        {
+            padding-left: 10px;
+        }
+        li
+        {
+         border: 1px solid white;
+         margin: 10px;
+         list-style: none;
+         padding-left: 10px;
+        }
+    }
+
+ #comment-div-container
+ {
+    li
+    {
+        border: none;
+    }
+ }
+   
 }
+
+

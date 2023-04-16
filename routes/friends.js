@@ -6,3 +6,4 @@ const friendsCount= require('../controllers/friendsController');
 router.get('/count',friendsCount.count);
 
 module.exports=router;
+

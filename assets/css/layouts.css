@@ -5,6 +5,7 @@ body {
 
 .layout-main {
   height: 100vh;
+  overflow: auto;
   padding-bottom: 10px;
   width: 100%;
 }

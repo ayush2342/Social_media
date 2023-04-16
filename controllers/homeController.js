@@ -17,7 +17,18 @@ module.exports.home=function(req,res)
   
     // })
 
-    Post.find({}).populate('user').exec().then(function(posts)
+    Post.find({})
+    .populate('user')
+    .populate(
+        {
+            path:'comments',
+            populate:
+            {
+                path:'user'
+            }
+        }
+    )
+    .exec().then(function(posts)
     {
         res.render('./home',{
             title:'SocialCode | Home',
@@ -30,6 +41,4 @@ module.exports.home=function(req,res)
     })
     
 }
-
-
 

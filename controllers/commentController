@@ -1,0 +1,62 @@
+
+const Comment = require('../models/comment')
+const Post = require('../models/posts')
+
+
+module.exports.create= function(req,res)
+{
+   Post.findById(req.body.post).then(function(post)
+   {
+    if(post)
+    {
+        Comment.create(
+            {
+                content:req.body.content,
+                user:req.user._id,
+                post:req.body.post
+            }
+        ).then(function(comment)
+        {
+            post.comments.push(comment);
+            post.save();
+           console.log('Comment Added succesfully')
+           return res.redirect('back');
+    
+        }).catch(function(error)
+        {
+           console.log('Error in Commenting',error);
+        }) 
+    }
+   }).catch(function(error)
+   {
+    console.log('Error in Finding Post after commenting',error);
+   })
+    
+}
+
+module.exports.destroy = function(req,res)
+{
+    Comment.findById(req.params.id).then(function(comment)
+    {
+        if(comment.user == req.user.id)
+        {
+            let postID=comment.post;
+            comment.deleteOne();
+            Post.findByIdAndUpdate(postID,{$pull:{comments:req.params.id}}).then(function()
+            {
+                console.log('Comment deleted from the Post')
+                return res.redirect('back');
+            }).catch(function()
+            {
+                console.log('Error in Deleting the comment from the Post DB',error);
+            })
+        }
+        else
+        {
+            return res.redirect('back');
+        }
+    }).catch(function()
+    {
+        console.log('Error in Deleting the Comment',error);
+    })
+}
