@@ -3,23 +3,39 @@ body {
   text-align: left;
 }
 
-h1 {
-  text-align: center;
+#home-div {
+  display: flex;
+  flex-wrap: wrap;
 }
-
-#feed-posts {
+#home-div h1 {
+  text-align: center;
+  width: 100%;
+}
+#home-div #feed-posts {
   padding-left: 10px;
   color: seashell;
-}
-#feed-posts #post-div-container ul {
-  padding-left: 10px;
-}
-#feed-posts #post-div-container li {
+  width: 70%;
   border: 1px solid white;
-  margin: 10px;
+}
+#home-div #feed-posts #post-div-container ul {
+  padding-left: 0px;
+}
+#home-div #feed-posts #post-div-container li {
+  border: 1px solid white;
+  margin: 0px 10px 10px 0px;
   list-style: none;
   padding-left: 10px;
 }
-#feed-posts #comment-div-container li {
+#home-div #feed-posts #comment-div-container li {
   border: none;
+}
+#home-div #user-friends {
+  width: 27%;
+  padding-left: 20px;
+  color: white;
+  border: 1px solid white;
+}
+#home-div #user-friends a {
+  color: aqua;
+  text-decoration: underline;
 }

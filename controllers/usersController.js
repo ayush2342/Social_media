@@ -3,9 +3,36 @@ const User=require('../models/user')
 
 module.exports.profile = function(req,res)
 {
-    res.render('./users',{
-        title:'Users'
-    })
+   User.findById(req.params.id).then(function(user)
+   {
+      res.render('./users',{
+         title:'Social Code |',
+         profile_user:user
+     })
+   }).catch(function(error)
+   {
+      console.log('Error in finding the User',error);
+   })
+    
+}
+
+module.exports.update = function(req,res)
+{
+   if(req.user.id==req.params.id)
+   {
+      User.findByIdAndUpdate(req.params.id,req.body).then(function()
+      {
+         return res.redirect('back');
+      }).catch(function(error)
+      {
+         console.log('Error in updating user',error);
+      })
+   }
+   else
+   {
+      return res.status(401).send('Unauthorized');
+   }
+   
 }
 
 //Render the Signin Page
@@ -63,7 +90,7 @@ module.exports.create=function(req,res)
 //Sign in and create the session for the user
 module.exports.createSession=function(req,res)
 {
-    return res.redirect('/users/profile');
+    return res.redirect('/');
 }
 
 module.exports.destroySession=function(req,res)

@@ -1,4 +1,5 @@
-const Post = require('../models/posts')
+const Post = require('../models/posts');
+const User=require('../models/user');
 
 module.exports.home=function(req,res)
 {
@@ -30,10 +31,18 @@ module.exports.home=function(req,res)
     )
     .exec().then(function(posts)
     {
-        res.render('./home',{
-            title:'SocialCode | Home',
-            posts:posts
+        User.find({}).then(function(user)
+        {
+            res.render('./home',{
+                title:'SocialCode | Home',
+                posts:posts,
+                all_users:user
+            })
+        }).catch(function(error)
+        {
+            console.log('Error in Finding all Users',error);
         })
+       
     }).catch(function(error)
     {
         console.log('Error in Displaying Posts',error);
