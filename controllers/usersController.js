@@ -13,6 +13,7 @@ module.exports.profile = async function(req,res)
       
    } catch (error) {
       console.log('Error',error);
+      return res.redirect('back');
    }
    
    // Reference Code Used Earlier without try catch and async await
@@ -37,16 +38,20 @@ module.exports.update = async function(req,res)
       if(req.user.id==req.params.id)
    {
       await User.findByIdAndUpdate(req.params.id,req.body);
-      console.log('User Updated succesfully')
+      req.flash('success','User Updated succesfully');
       return res.redirect('back');
    }
    else
    {
+      req.flash('error','Unauthorized');
       return res.status(401).send('Unauthorized');
    }
       
    } catch (error) {
+
+      req.flash('error',error);
       console.log('Error',error);
+      return res.redirect('back');
    }
 
    // Reference Code Used Earlier without try catch and async await
@@ -92,6 +97,7 @@ module.exports.create= async function(req,res)
    try {
       if(req.body.password!=req.body.confirm_password)
          {
+            req.flash('error','Passwords do not match');
             return res.redirect('back');
          }
 
@@ -99,17 +105,20 @@ module.exports.create= async function(req,res)
       if(!user)
          {
             await User.create(req.body);
-               console.log('User Created succesfully')
+            req.flash('success','User Created succesfully');
                return res.redirect('/users/Signin');
          }
       else
       {
+         req.flash('error','User Already exits,Try signing in');
          return res.redirect('back');
       }
 
    }
     catch (error) {
+      req.flash('error',error);
       console.log('Error',error);
+      return res.redirect('back');
    }
 
    // Reference Code Used Earlier without try catch and async await
@@ -148,6 +157,7 @@ module.exports.create= async function(req,res)
 //Sign in and create the session for the user
 module.exports.createSession=function(req,res)
 {
+   req.flash('success','Logged in Successfully');
     return res.redirect('/');
 }
 
@@ -157,11 +167,15 @@ module.exports.destroySession=function(req,res)
    {
       if(error)
       {
-         return console.log('Error while signing out');
+         req.flash('error',error);
+         console.log('Error while signing out');
+         return res.redirect('back');
       }
 
+      req.flash('success','You have been logged out');
       return res.redirect('/users/Signin');
    });
     
 }
+
 

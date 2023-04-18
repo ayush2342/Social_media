@@ -12,11 +12,13 @@ module.exports.create= async function(req,res)
                     user:req.user._id
                 }
              ) 
-    console.log('Post Added succesfully')
+    req.flash('success','Post Added succesfully');
     return res.redirect('back');
         
     } catch (error) {
+        req.flash('error',error);
         console.log('Error',error);
+        return res.redirect('back');
     }
 
     // Reference Code Used Earlier without try catch and async await
@@ -48,17 +50,20 @@ module.exports.destroy = async function(req,res)
             
           post.deleteOne();
             await Comment.deleteMany({post:req.params.id});
-
-            console.log('Post and its Comments Deleted Successfully')
+            req.flash('success','Post and its Comments Deleted Successfully');
             return res.redirect('back');
         }
         else
         {
+            req.flash('error','Unable to delete the Post');
             return res.redirect('back');
         }
         
     } catch (error) {
+
+        req.flash('error',error);
         console.log('Error',error);
+        return res.redirect('back');
     }
      // Reference Code Used Earlier without try catch and async await
 
@@ -89,4 +94,3 @@ module.exports.destroy = async function(req,res)
     //     console.log('Error in Deleting the Post',error);
     // })
 }
-

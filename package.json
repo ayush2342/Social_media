@@ -6,8 +6,8 @@
   "scripts": {
     "start-server": "nodemon ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "scss-watch":"sass --no-source-map --watch --update --style=expanded assets/scss:assets/css",
-    "start":"npm-run-all --parallel scss-watch start-server"
+    "scss-watch": "sass --no-source-map --watch --update --style=expanded assets/scss:assets/css",
+    "start": "npm-run-all --parallel scss-watch start-server"
   },
   "keywords": [
     "social"
@@ -15,6 +15,7 @@
   "author": "Ayush Sharma",
   "license": "ISC",
   "dependencies": {
+    "connect-flash": "^0.1.1",
     "connect-mongo": "^5.0.0",
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.9",
