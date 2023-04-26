@@ -6,6 +6,7 @@ module.exports.home= async function(req,res)
 
     try {
         let posts = await Post.find({})
+        .sort('-createdAt')
         .populate('user')
         .populate(
             {
@@ -41,7 +42,7 @@ module.exports.home= async function(req,res)
     // }).catch(function(error)
     // {
     //     console.log('Error in Displaying Posts',error);
-  
+    
     // })
 
     // Post.find({})

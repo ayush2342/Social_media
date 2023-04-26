@@ -1,8 +1,8 @@
-<li>
+<li id='comment-<%=j._id%>'>
     <p>
-        Comment <%=count++%> - <%=j.content%> @ <%=j.user.name%> 
+        Comment - <%=j.content%> @ <%=j.user.name%> 
         <% if(locals.user && locals.user.id == j.user.id) {%>
-        <a href="/comments/destroy/<%=j.id%>"> - Delete Comment</a>
+        <a href="/comments/destroy/<%=j.id%>" class="delete-comment-button"> - Delete Comment</a>
         <%}%>
     </p>
 </li>

@@ -1,19 +1,34 @@
 
 const Post = require('../models/posts');
-const Comment = require('../models/comment')
+const Comment = require('../models/comment');
+const User=require('../models/user');
 
 
 module.exports.create= async function(req,res)
 {
     try {
-        await Post.create(
+        let post=await Post.create(
                 {
                     content:req.body.content,
                     user:req.user._id
                 }
-             ) 
-    req.flash('success','Post Added succesfully');
-    return res.redirect('back');
+             )
+
+             let populatedPost=await Post.findOne({_id: post._id})
+             .populate('user','-password')
+
+             
+             if (req.xhr) {
+                return res.status(200).json({
+                    data: {
+                        post: populatedPost
+                    },
+                    message: "Post added"
+                });
+            }
+
+            req.flash('success','Post Added succesfully');
+            return res.redirect('back');
         
     } catch (error) {
         req.flash('error',error);
@@ -49,7 +64,22 @@ module.exports.destroy = async function(req,res)
         {
             
           post.deleteOne();
+
             await Comment.deleteMany({post:req.params.id});
+
+            if(req.xhr)
+          {
+            return res.status(200).json(
+                {
+                    data:
+                    {
+                        post_id:req.params.id
+                    },
+                    message:"Post and Comments Deleted"
+                }
+            )
+          }
+
             req.flash('success','Post and its Comments Deleted Successfully');
             return res.redirect('back');
         }
