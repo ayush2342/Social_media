@@ -1,4 +1,6 @@
 const User=require('../models/user')
+const fs = require('fs');
+const path = require('path')
 
 
 module.exports.profile = async function(req,res)
@@ -12,10 +14,11 @@ module.exports.profile = async function(req,res)
      })
       
    } catch (error) {
+
       console.log('Error',error);
       return res.redirect('back');
    }
-   
+
    // Reference Code Used Earlier without try catch and async await
 
    // User.findById(req.params.id).then(function(user)
@@ -28,7 +31,7 @@ module.exports.profile = async function(req,res)
    // {
    //    console.log('Error in finding the User',error);
    // })
-    
+   
 }
 
 module.exports.update = async function(req,res)
@@ -37,9 +40,34 @@ module.exports.update = async function(req,res)
 
       if(req.user.id==req.params.id)
    {
-      await User.findByIdAndUpdate(req.params.id,req.body);
-      req.flash('success','User Updated succesfully');
-      return res.redirect('back');
+      let user = await User.findById(req.params.id);
+      User.uploadedAvatar(req,res,function(error)
+      {
+         if(error)
+         {
+            console.log("********Multer Error : ",error)
+         }
+
+         user.name = req.body.name;
+         user.email = req.body.email;
+
+         if(req.file)
+         {
+            if(user.avatar)
+            {
+               fs.unlinkSync(path.join(__dirname,'..',user.avatar))
+            }
+            // Saving the path of uploaded file in the avatar field of user
+            user.avatar = User.avatarPath + '/' + req.file.filename;
+         }
+         user.save();
+         req.flash('success','User Updated succesfully');
+         return res.redirect('back');
+
+      })
+      // await User.findByIdAndUpdate(req.params.id,req.body);
+      // req.flash('success','User Updated succesfully');
+      // return res.redirect('back');
    }
    else
    {
@@ -49,7 +77,6 @@ module.exports.update = async function(req,res)
       
    } catch (error) {
 
-      req.flash('error',error);
       console.log('Error',error);
       return res.redirect('back');
    }
@@ -116,7 +143,7 @@ module.exports.create= async function(req,res)
 
    }
     catch (error) {
-      req.flash('error',error);
+      
       console.log('Error',error);
       return res.redirect('back');
    }
