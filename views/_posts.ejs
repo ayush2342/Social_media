@@ -1,27 +1,28 @@
 <li id='post-<%=i._id%>'>
-    <p>    
+    <p>
         <%=i.content%> <br>
-        - <%=i.user.name%>
-        <% if(locals.user && locals.user.id == i.user.id) {%>
-            <a class="delete-post-button" href="/posts/destroy/<%=i.id%>"> - Delete Post</a>
-            <%}%>
-        <%if(locals.user){%>
-        <form action='comments/create' id="new-comment-form" method="post">
-            <textarea name="content" cols="20" rows="1" placeholder="Add a Comment...." required></textarea>
-            <input type="hidden" name="post" value="<%=i._id%>">
-            <input type="submit" value="Comment">
-        </form>
-        <%}%>
-        <div id="comment-div-container">
-            <ul id='post-comments-<%=i._id%>'>
-                <%for(let j of i.comments){%>
+            - <%=i.user.name%>
+                <% if(locals.user && locals.user.id==i.user.id) {%>
+                    <a class="delete-post-button" href="/posts/destroy/<%=i.id%>"> - Delete Post</a>
+                    <%}%>
+                        <%if(locals.user){%>
+                            <form action='comments/create' id="new-comment-form" method="post">
+                                <textarea name="content" cols="20" rows="1" placeholder="Add a Comment...."
+                                    required></textarea>
+                                <input type="hidden" name="post" value="<%=i._id%>">
+                                <input type="submit" value="Comment">
+                            </form>
+                            <%}%>
+                                <div id="comment-div-container">
+                                    <ul id='post-comments-<%=i._id%>'>
+                                        <%for(let j of i.comments){%>
 
-                    <%- include('_comments',{j:j}) -%>
-                <%}%>
-            </ul>
-           
-        </div>
-        
+                                            <%- include('_comments',{j:j}) -%>
+                                                <%}%>
+                                    </ul>
+
+                                </div>
+
     </p>
-   
+
 </li>

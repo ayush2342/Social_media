@@ -1,36 +1,35 @@
 const Post = require('../models/posts');
-const User=require('../models/user');
+const User = require('../models/user');
 
-module.exports.home= async function(req,res)
-{
+module.exports.home = async function (req, res) {
 
     try {
         let posts = await Post.find({})
-        .sort('-createdAt')
-        .populate('user')
-        .populate(
-            {
-                path:'comments',
-                populate:
+            .sort('-createdAt')
+            .populate('user')
+            .populate(
                 {
-                    path:'user'
+                    path: 'comments',
+                    populate:
+                    {
+                        path: 'user'
+                    }
                 }
-            }
-        )
+            )
         let user = await User.find({});
-    
-        return res.render('./home',{
-            title:'SocialCode | Home',
-            posts:posts,
-            all_users:user
-                });
+
+        return res.render('./home', {
+            title: 'SocialCode | Home',
+            posts: posts,
+            all_users: user
+        });
     } catch (error) {
-        console.log('Error',error);
+        console.log('Error', error);
     }
 
     // Reference Code Used Earlier without try catch and async await
 
-     // console.log(req.cookies);
+    // console.log(req.cookies);
     // res.cookie('user_id',77);
 
     // Post.find({}).then(function(posts)
@@ -42,7 +41,7 @@ module.exports.home= async function(req,res)
     // }).catch(function(error)
     // {
     //     console.log('Error in Displaying Posts',error);
-    
+
     // })
 
     // Post.find({})
@@ -69,13 +68,13 @@ module.exports.home= async function(req,res)
     //     {
     //         console.log('Error in Finding all Users',error);
     //     })
-       
+
     // }).catch(function(error)
     // {
     //     console.log('Error in Displaying Posts',error);
-  
+
     // })
-   
-    
+
+
 }
 

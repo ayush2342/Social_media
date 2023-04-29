@@ -6,10 +6,12 @@
   color: white;
   padding: 0 10px;
 }
+
 .footer-main-div li {
   display: inline-block;
   margin-right: 10px;
 }
+
 .footer-main-div a {
   color: inherit;
 }

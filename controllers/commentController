@@ -3,120 +3,114 @@ const Comment = require('../models/comment')
 const Post = require('../models/posts')
 
 
-module.exports.create= async function(req,res)
-{
+module.exports.create = async function (req, res) {
     try {
         let post = await Post.findById(req.body.post);
-        if(post)
-    {
-        let comment = await Comment.create(
-            {
-                content:req.body.content,
-                user:req.user._id,
-                post:req.body.post
+        if (post) {
+            let comment = await Comment.create(
+                {
+                    content: req.body.content,
+                    user: req.user._id,
+                    post: req.body.post
+                }
+            )
+
+            post.comments.push(comment);
+            post.save();
+
+            let populatedComment = await Comment.findOne({ _id: comment._id })
+                .populate('user', '-password')
+
+            if (req.xhr) {
+                return res.status(200).json({
+                    data: {
+                        comment: populatedComment,
+                        post: post
+                    },
+                    message: "Comment added"
+                });
             }
-        )
 
-    post.comments.push(comment);
-    post.save();
+            req.flash('success', 'Comment Added succesfully');
 
-    let populatedComment=await Comment.findOne({_id: comment._id})
-             .populate('user','-password')
+            return res.redirect('back');
+        }
 
-    if (req.xhr) {
-        return res.status(200).json({
-            data: {
-                comment: populatedComment,
-                post:post
-            },
-            message: "Comment added"
-        });
-    }
-
-    req.flash('success','Comment Added succesfully');
-    
-    return res.redirect('back');
-    }
-        
     } catch (error) {
 
-        req.flash('error',error);
-        console.log('Error',error);
+        req.flash('error', error);
+        console.log('Error', error);
         return res.redirect('back');
     }
-   
-    
 
-// Reference Code Used Earlier without try catch and async await
 
-//    Post.findById(req.body.post).then(function(post)
-//    {
-//     if(post)
-//     {
-//         Comment.create(
-//             {
-//                 content:req.body.content,
-//                 user:req.user._id,
-//                 post:req.body.post
-//             }
-//         ).then(function(comment)
-//         {
-//             post.comments.push(comment);
-//             post.save();
-//            console.log('Comment Added succesfully')
-//            return res.redirect('back');
-    
-//         }).catch(function(error)
-//         {
-//            console.log('Error in Commenting',error);
-//         }) 
-//     }
-//    }).catch(function(error)
-//    {
-//     console.log('Error in Finding Post after commenting',error);
-//    })
+
+    // Reference Code Used Earlier without try catch and async await
+
+    //    Post.findById(req.body.post).then(function(post)
+    //    {
+    //     if(post)
+    //     {
+    //         Comment.create(
+    //             {
+    //                 content:req.body.content,
+    //                 user:req.user._id,
+    //                 post:req.body.post
+    //             }
+    //         ).then(function(comment)
+    //         {
+    //             post.comments.push(comment);
+    //             post.save();
+    //            console.log('Comment Added succesfully')
+    //            return res.redirect('back');
+
+    //         }).catch(function(error)
+    //         {
+    //            console.log('Error in Commenting',error);
+    //         }) 
+    //     }
+    //    }).catch(function(error)
+    //    {
+    //     console.log('Error in Finding Post after commenting',error);
+    //    })
 
 }
 
-module.exports.destroy = async function(req,res)
-{
+module.exports.destroy = async function (req, res) {
 
     try {
-        
+
         let comment = await Comment.findById(req.params.id);
 
-        if(comment.user == req.user.id)
-        {
-            let postID=comment.post;
+        if (comment.user == req.user.id) {
+            let postID = comment.post;
             comment.deleteOne();
-            await Post.findByIdAndUpdate(postID,{$pull:{comments:req.params.id}});
+            await Post.findByIdAndUpdate(postID, { $pull: { comments: req.params.id } });
 
-            if(req.xhr)
-            {
-              return res.status(200).json(
-                  {
-                      data:
-                      {
-                          comment_id:req.params.id
-                      },
-                      message:"Comment Deleted"
-                  }
-              )
-                }
+            if (req.xhr) {
+                return res.status(200).json(
+                    {
+                        data:
+                        {
+                            comment_id: req.params.id
+                        },
+                        message: "Comment Deleted"
+                    }
+                )
+            }
 
-            req.flash('success','Comment deleted from the Post');
+            req.flash('success', 'Comment deleted from the Post');
             return res.redirect('back');
         }
-        else
-        {
-            req.flash('error','Unable to delete the comment from the Post');
+        else {
+            req.flash('error', 'Unable to delete the comment from the Post');
             return res.redirect('back');
         }
-        
+
     } catch (error) {
 
-        req.flash('error',error);
-        console.log('Error',error);
+        req.flash('error', error);
+        console.log('Error', error);
         return res.redirect('back');
     }
     // Reference Code Used Earlier without try catch and async await
