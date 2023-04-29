@@ -1,5 +1,4 @@
-.header-main-div
-{
+.header-main-div {
     width: 100%;
     background-color: #183153;
     display: flex;
@@ -8,20 +7,18 @@
     padding: 0 10px;
     justify-content: space-between;
 
-    p
-    {
+    p {
         font-weight: 900;
         font-size: 25px;
         margin: 8% 0px;
     }
 
-    li
-    {
+    li {
         display: inline-block;
         margin-right: 10px;
     }
-    a 
-    { 
-    color: inherit; 
-    } 
+
+    a {
+        color: inherit;
+    }
 }

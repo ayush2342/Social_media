@@ -1,64 +1,55 @@
-body
-{
+body {
     background-color: blueviolet;
     text-align: left;
 }
-#home-div
-{
+
+#home-div {
     display: flex;
     flex-wrap: wrap;
-    h1{
+
+    h1 {
         text-align: center;
         width: 100%;
     }
-    
-    #feed-posts
-    {
+
+    #feed-posts {
         padding-left: 10px;
         color: seashell;
         width: 70%;
         border: 1px solid white;
-    
-        #post-div-container
-        {
-            ul
-            {
+
+        #post-div-container {
+            ul {
                 padding-left: 0px;
             }
-            li
-            {
-             border: 1px solid white;
-              margin: 0px 10px 10px 0px;
-             list-style: none;
-             padding-left: 10px;
+
+            li {
+                border: 1px solid white;
+                margin: 0px 10px 10px 0px;
+                list-style: none;
+                padding-left: 10px;
             }
         }
-    
-     #comment-div-container
-     {
-        li
-        {
-            border: none;
+
+        #comment-div-container {
+            li {
+                border: none;
+            }
         }
-     }
-       
+
     }
-    
-    #user-friends
-    {
+
+    #user-friends {
         width: 27%;
         padding-left: 20px;
-        color:white;
+        color: white;
         border: 1px solid white;
-    
-        a{
+
+        a {
             color: aqua;
             text-decoration: underline;
         }
-    
+
     }
-    
+
 }
-
-
-

@@ -1,5 +1,4 @@
-.footer-main-div
-{
+.footer-main-div {
     width: 100%;
     background-color: #757475;
     display: flex;
@@ -10,13 +9,12 @@
     // bottom:0px;
 
 
-    li
-    {
+    li {
         display: inline-block;
         margin-right: 10px;
     }
-    a 
-    { 
-    color: inherit; 
-    } 
+
+    a {
+        color: inherit;
+    }
 }
