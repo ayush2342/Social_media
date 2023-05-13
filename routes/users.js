@@ -10,6 +10,9 @@ router.get('/Signup', passport.restrictAccess, userProfile.SignUp);
 router.post('/create', userProfile.create);
 router.post('/update/:id', passport.checkAuthentication, userProfile.update)
 
+router.get('/ForgotPassword',userProfile.forgotPassword);
+// router.get('/ForgotPassword',userProfile.forgotPassword);
+
 //Use passport as a middleware to Authenticate
 router.post('/create-session', passport.authenticate(
     'local', { failureRedirect: '/users/Signin' }
