@@ -108,6 +108,14 @@ module.exports.SignUp = function (req, res) {
       });
 }
 
+//Render Forgot Password Page
+module.exports.forgotPassword = function (req, res) {
+   res.render('./forgotPassword',
+   {
+      title: 'forgotPassword'
+   });
+}
+
 //Get the sign up Data 
 module.exports.create = async function (req, res) {
    try {

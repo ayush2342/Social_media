@@ -7,14 +7,14 @@ exports.newComment = async (comment)=>{
 
     let info = await nodemailer.transporter.sendMail({
 
-        from: 'ayushsharma2342@gmail.com', // sender address
+        from: 'testa8663@gmail.com', // sender address
         to: comment.user.email, // list of receivers
         subject: "New Commment Published ✔", // Subject line
         // text: "Hello world?", // plain text body
         html: htmlString // html body
     })
 
-    console.log("Message sent: ", info);
+    console.log("Message sent: ");
         
     } catch (error) {
 
