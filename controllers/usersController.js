@@ -1,6 +1,9 @@
 const User = require('../models/user')
 const fs = require('fs');
 const path = require('path')
+const ResetPassword = require('../models/resetPassword')
+const crypto = require('crypto');
+const resetPasswordMailer = require('../mailers/resetPassword_mailer')
 
 
 module.exports.profile = async function (req, res) {
@@ -96,7 +99,7 @@ module.exports.update = async function (req, res) {
 module.exports.Signin = function (req, res) {
    res.render('./signinPage',
       {
-         title: 'SignUpPage'
+         title: 'SignInPage'
       });
 }
 
@@ -104,7 +107,7 @@ module.exports.Signin = function (req, res) {
 module.exports.SignUp = function (req, res) {
    res.render('./signupPage',
       {
-         title: 'SignInPage'
+         title: 'SignupPage'
       });
 }
 
@@ -116,11 +119,114 @@ module.exports.forgotPassword = function (req, res) {
    });
 }
 
+//Reset Password Mail after Forgot Password
+module.exports.resetPassword = async function (req, res) {
+
+   try {
+      let user = await User.findOne({ email: req.body.email });
+      if (user) {
+
+         let resetPasswordUser = await ResetPassword.create(
+            {
+                user: user._id,
+                accessToken: crypto.randomBytes(20).toString('hex'),
+                isValid: true
+            })
+
+            let populatedresetPasswordUser = await ResetPassword.findOne({ _id: resetPasswordUser._id })
+                .populate('user', '-password')
+                resetPasswordMailer.resetPassword(populatedresetPasswordUser);
+         req.flash('success', 'Reset Password Link has been sent to your Registered Email');
+
+         return res.redirect('back');
+      }
+      else {
+         req.flash('error', 'Email Does Not Exist, Try Signup');
+         return res.redirect('back');
+      }
+      
+  
+      } 
+      catch (error) {
+      console.log('Error', error);
+      return res.redirect('back');
+      
+   }
+
+}
+
+//Render Change Password Page
+module.exports.passwordReset = async function (req, res) {
+
+   try {
+
+      let accessToken = await ResetPassword.findOne({accessToken:req.params.id});
+
+      if(!accessToken || accessToken.isValid==false)
+      {
+         res.render('./tokenExpired',
+      {
+         title: 'tokenExpired'
+      });
+
+      }
+      else{
+         res.render('./changePassword',
+         {
+            title: 'changePassword',
+            accessToken:accessToken
+         });
+      }
+      
+   } catch (error) {
+      console.log('Error', error);
+      return res.redirect('/users/Signin');
+   }
+}
+
+//Change the Password of the User
+module.exports.changePassword = async function (req, res) {
+
+   try {
+
+      if (req.body.password != req.body.confirm_password) {
+         req.flash('error','Passwords do not match');
+         return res.redirect('back');
+      }
+      else
+      {
+         let accessTokenUser= await ResetPassword.findOne({accessToken:req.body.accessToken});
+         if(accessTokenUser)
+         {
+            
+            let user = await User.findOne({_id:accessTokenUser.user});
+            if(user)
+            {
+               user.password=req.body.password;
+               accessTokenUser.isValid=false;
+               user.save();
+               accessTokenUser.save();
+               req.flash('success','Password changed Succesfully');
+               return res.redirect('/users/Signin');
+            }
+
+         }
+         req.flash('error','Something went wrong.Please try again');
+         return res.redirect('/users/ForgotPassword');
+      }
+      
+   } catch (error) {
+      console.log('Error', error);
+      return res.redirect('back');
+   }
+}
+
+
 //Get the sign up Data 
 module.exports.create = async function (req, res) {
    try {
       if (req.body.password != req.body.confirm_password) {
-         req.flash('error', 'Passwords do not match');
+         req.flash('error','Passwords do not match');
          return res.redirect('back');
       }
 

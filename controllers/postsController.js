@@ -2,6 +2,7 @@
 const Post = require('../models/posts');
 const Comment = require('../models/comment');
 const User = require('../models/user');
+const Like = require('../models/like');
 
 
 module.exports.create = async function (req, res) {
@@ -59,6 +60,17 @@ module.exports.destroy = async function (req, res) {
         let post = await Post.findById(req.params.id);
         // .id instead of ._id meaning converting the object id into string
         if (post.user == req.user.id) {
+
+            await Like.deleteMany({ likeable: req.params.id,onModel: 'Post' });
+            
+        // Get the comments associated with the post
+        let comments = await Comment.find({ post: req.params.id });
+
+        // Loop through the comments and delete the associated likes
+         for (let comment of comments)
+          {
+        await Like.deleteMany({ likeable: comment._id, onModel: 'Comment' });
+            }
 
             post.deleteOne();
 

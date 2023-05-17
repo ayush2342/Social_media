@@ -1,15 +1,15 @@
 const nodemailer = require('../config/nodemailer');
 
-exports.newComment = async (comment)=>{
+exports.resetPassword = async (resetPasswordUser)=>{
 
     try {
-        let htmlString = nodemailer.renderTemplate({comment:comment},'/comments/new_comments.ejs');
+        let htmlString = nodemailer.renderTemplate({resetPasswordUser:resetPasswordUser},'/resetPassword.ejs');
 
     let info = await nodemailer.transporter.sendMail({
 
         from: 'testa8663@gmail.com', // sender address
-        to: comment.user.email, // list of receivers
-        subject: "New Commment Published ✔", // Subject line
+        to: resetPasswordUser.user.email, // list of receivers
+        subject: "Reset Password Link 🔑", // Subject line
         // text: "Hello world?", // plain text body
         html: htmlString // html body
     })

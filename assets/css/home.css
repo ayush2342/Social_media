@@ -17,6 +17,9 @@ body {
   width: 70%;
   border: 1px solid white;
 }
+#home-div #feed-posts a {
+  color: aqua;
+}
 #home-div #feed-posts #post-div-container ul {
   padding-left: 0px;
 }

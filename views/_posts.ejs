@@ -1,6 +1,6 @@
 <li id='post-<%=i._id%>'>
     <p>
-        <%=i.content%> <br>
+        <%=i.content%> <a class="like-button" href="/likes/toggle/?id=<%=i.id%>&type=Post"> - <%=i.likes.length%> <i class="fa-solid fa-thumbs-up"></i> Like</a> <br>
             - <%=i.user.name%>
                 <% if(locals.user && locals.user.id==i.user.id) {%>
                     <a class="delete-post-button" href="/posts/destroy/<%=i.id%>"> - Delete Post</a>

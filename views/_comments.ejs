@@ -1,6 +1,7 @@
 <li id='comment-<%=j._id%>'>
     <p>
-        Comment - <%=j.content%> @ <%=j.user.name%>
+        Comment - <%=j.content%> <a class="like-button" href="/likes/toggle/?id=<%=j.id%>&type=Comment"> - <%=j.likes.length%> <i class="fa-solid fa-thumbs-up"></i> Like</a> <br>
+        @ <%=j.user.name%>
                 <% if(locals.user && locals.user.id==j.user.id) {%>
                     <a href="/comments/destroy/<%=j.id%>" class="delete-comment-button"> - Delete Comment</a>
                     <%}%>

@@ -11,7 +11,10 @@ router.post('/create', userProfile.create);
 router.post('/update/:id', passport.checkAuthentication, userProfile.update)
 
 router.get('/ForgotPassword',userProfile.forgotPassword);
-// router.get('/ForgotPassword',userProfile.forgotPassword);
+router.post('/ResetPassword',userProfile.resetPassword);
+router.get('/passwordReset/:id',userProfile.passwordReset);
+router.post('/changePassword',userProfile.changePassword);
+
 
 //Use passport as a middleware to Authenticate
 router.post('/create-session', passport.authenticate(

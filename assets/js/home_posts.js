@@ -17,6 +17,8 @@
 
 
                         deletePost();
+                        createComment();
+                        likeFunction();
 
                         // deletePost($('.delete-post-button',newPost))
                     },
@@ -34,9 +36,9 @@
     let newPostDOM = function (i) {
         return `<li id='post-${i._id}'>
         <p>    
-        ${i.content}<br>
+        ${i.content} <a class="like-button" href="/likes/toggle/?id=${i._id}&type=Post"> - ${i.likes.length} <i class="fa-solid fa-thumbs-up"></i> Like</a> <br>
             - ${i.user.name}
-           
+            
                 <a class="delete-post-button" href="/posts/destroy/${i._id}"> - Delete Post</a>
                
             <form action='comments/create' id="new-comment-form" method="post">
@@ -153,6 +155,7 @@
                             notyFunction(data.message);
 
                             deleteComment();
+                            likeFunction();
 
                         },
                         error: function (error) {
@@ -171,7 +174,8 @@
     let newCommentDOM = function (j) {
         return `<li id='comment-${j._id}'>
         <p>
-            Comment - ${j.content} @ ${j.user.name}
+            Comment - ${j.content} <a class="like-button" href="/likes/toggle/?id=${j._id}&type=Comment"> - ${j.likes.length} <i class="fa-solid fa-thumbs-up"></i> Like</a> <br>
+            @ ${j.user.name} 
             <a href="/comments/destroy/${j._id}" class="delete-comment-button"> - Delete Comment</a>
         </p>
     </li> `
@@ -205,12 +209,42 @@
         }
 
     }
+  
+    //   Method to Like/Unlike Post/Comment from DOM
+
+    let likeFunction = function()
+    {
+        let likeButtonClick = document.querySelectorAll('.like-button');
+
+        for (var i = 0; i < likeButtonClick.length; i++) {
+            let likeLink = $(likeButtonClick[i]);
+            likeLink.click(function (event) {
+                event.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: likeLink.prop('href'),
+                    success: function (data) {
+
+                        notyFunction(data.message);
+                    },
+                    error: function (error) {
+                        console.log(error.responseText);
+                    }
+                });
+
+            })
+        }
+
+    }
 
 
     createPost();
     deletePost();
     createComment();
     deleteComment();
+    likeFunction();
+
 
 }
 
