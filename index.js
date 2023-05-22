@@ -1,4 +1,6 @@
 const express = require('express');
+const env = require('./config/enviornment');
+const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const app = express();
 const port = 8000;
@@ -30,7 +32,9 @@ app.use(cookieParser());
 // Make the upload path available to browser
 app.use('/uploads', express.static(__dirname + '/uploads'))
 
-app.use(express.static('./assets'));
+app.use(logger(env.morgan.mode,env.morgan.options))
+
+app.use(express.static(env.asset_path));
 app.use(expressLayouts);
 
 //Extract styles and scripts from sub pages into the layout
@@ -47,7 +51,7 @@ app.use(session(
     {
         name: 'social_Code',
         //ToDO Change the secret before deployment
-        secret: 'blahSomething',
+        secret: env.session_cookie_key,
         saveUninitialized: false,
         resave: false,
         cookie:

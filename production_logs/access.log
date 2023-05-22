@@ -1,0 +1,40 @@
+::1 - - [22/May/2023:09:58:31 +0000] "GET /users/Signin HTTP/1.1" 304 - "http://localhost:8000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:09:58:31 +0000] "GET /css/layouts.css HTTP/1.1" 304 - "http://localhost:8000/users/Signin" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:09:58:31 +0000] "GET /css/header.css HTTP/1.1" 304 - "http://localhost:8000/users/Signin" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:09:58:31 +0000] "GET /css/footer.css HTTP/1.1" 304 - "http://localhost:8000/users/Signin" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:09:58:31 +0000] "GET /css/signIn.css HTTP/1.1" 304 - "http://localhost:8000/users/Signin" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:09:58:31 +0000] "GET /cart.json HTTP/1.1" 404 148 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:09:58:47 +0000] "POST /users/create-session HTTP/1.1" 302 46 "http://localhost:8000/users/Signin" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:09:58:47 +0000] "GET / HTTP/1.1" 304 - "http://localhost:8000/users/Signin" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:09:58:47 +0000] "GET /css/layouts.css HTTP/1.1" 304 - "http://localhost:8000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:09:58:47 +0000] "GET /css/header.css HTTP/1.1" 304 - "http://localhost:8000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:09:58:47 +0000] "GET /css/footer.css HTTP/1.1" 304 - "http://localhost:8000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:09:58:47 +0000] "GET /css/home.css HTTP/1.1" 304 - "http://localhost:8000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:09:58:47 +0000] "GET /js/home_posts.js HTTP/1.1" 304 - "http://localhost:8000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:09:58:47 +0000] "GET /js/chat_engine.js HTTP/1.1" 304 - "http://localhost:8000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:09:58:47 +0000] "GET /css/chat_box.css HTTP/1.1" 200 1199 "http://localhost:8000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:09:58:47 +0000] "GET /cart.json HTTP/1.1" 404 148 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+[0mGET / [36m302[0m 22.726 ms - 70[0m
+[0mGET /users/Signin [36m304[0m 23.617 ms - -[0m
+[0mGET /css/layouts.css [36m304[0m 5.004 ms - -[0m
+[0mGET /css/header.css [36m304[0m 4.402 ms - -[0m
+[0mGET /css/footer.css [36m304[0m 2.148 ms - -[0m
+[0mGET /css/signIn.css [36m304[0m 2.087 ms - -[0m
+[0mGET /cart.json [33m404[0m 6.245 ms - 148[0m
+[0mPOST /users/create-session [36m302[0m 18.041 ms - 46[0m
+[0mGET / [32m200[0m 41.653 ms - 8320[0m
+[0mGET /css/layouts.css [36m304[0m 2.267 ms - -[0m
+[0mGET /css/header.css [36m304[0m 2.341 ms - -[0m
+[0mGET /css/footer.css [36m304[0m 6.138 ms - -[0m
+[0mGET /css/home.css [36m304[0m 6.341 ms - -[0m
+[0mGET /css/chat_box.css [36m304[0m 6.522 ms - -[0m
+[0mGET /js/home_posts.js [36m304[0m 6.727 ms - -[0m
+[0mGET /js/chat_engine.js [36m304[0m 6.777 ms - -[0m
+[0mGET /cart.json [33m404[0m 6.672 ms - 148[0m
+::1 - - [22/May/2023:10:03:57 +0000] "GET / HTTP/1.1" 302 70 "http://localhost:8000/users/Signin" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:10:03:57 +0000] "GET /users/Signin HTTP/1.1" 304 - "http://localhost:8000/users/Signin" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:10:03:57 +0000] "GET /css/layouts.css HTTP/1.1" 304 - "http://localhost:8000/users/Signin" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:10:03:57 +0000] "GET /css/header.css HTTP/1.1" 304 - "http://localhost:8000/users/Signin" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:10:03:57 +0000] "GET /css/footer.css HTTP/1.1" 304 - "http://localhost:8000/users/Signin" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:10:03:57 +0000] "GET /css/signIn.css HTTP/1.1" 304 - "http://localhost:8000/users/Signin" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+::1 - - [22/May/2023:10:03:58 +0000] "GET /cart.json HTTP/1.1" 404 148 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
