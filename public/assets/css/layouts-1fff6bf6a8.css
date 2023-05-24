@@ -1,0 +1,11 @@
+body {
+  text-align: center;
+  margin: 0;
+}
+
+.layout-main {
+  height: 100vh;
+  overflow: auto;
+  padding-bottom: 10px;
+  width: 100%;
+}
