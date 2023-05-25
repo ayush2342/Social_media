@@ -4,7 +4,7 @@ class chatEngine{
         this.chatBoxId=$(`#${chatBoxId}`);
         this.userEmail=userEmail;
 
-        this.socket=io.connect('http://3.83.128.21:5000')
+        this.socket=io.connect('http://3.83.128.21:5000') //change it accordingly for localhost and remote server
 
         if(this.userEmail)
         {
