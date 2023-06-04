@@ -5,6 +5,7 @@
   flex-wrap: wrap;
   color: white;
   padding: 0 10px;
+  box-sizing: border-box;
 }
 .footer-main-div li {
   display: inline-block;

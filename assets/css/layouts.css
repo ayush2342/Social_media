@@ -4,8 +4,9 @@ body {
 }
 
 .layout-main {
-  height: 100vh;
+  height: 83.5vh;
   overflow: auto;
   padding-bottom: 10px;
   width: 100%;
+  box-sizing: border-box;
 }
