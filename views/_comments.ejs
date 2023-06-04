@@ -1,9 +1,9 @@
 <li id='comment-<%=j._id%>'>
     <p>
-        Comment - <%=j.content%> <a class="like-button" href="/likes/toggle/?id=<%=j.id%>&type=Comment"> - <%=j.likes.length%> <i class="fa-solid fa-thumbs-up"></i> Like</a> <br>
+        Comment - <%=j.content%> <a class="like-button" id="like-<%=j._id%>" data-likes="<%=j.likes.length%>" href="/likes/toggle/?id=<%=j.id%>&type=Comment"> - <%=j.likes.length%>  Like</a>  <i class="fa-solid fa-thumbs-up"></i><br>
         @ <%=j.user.name%>
                 <% if(locals.user && locals.user.id==j.user.id) {%>
-                    <a href="/comments/destroy/<%=j.id%>" id=<%=j._id%> class="delete-comment-button"> - Delete Comment</a>
+                    <a href="/comments/destroy/<%=j.id%>" id="<%=j._id%>" class="delete-comment-button"> - Delete Comment</a>
                     <%}%>
     </p>
 </li>

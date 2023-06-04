@@ -17,8 +17,8 @@
 
                         deletePost($('.delete-post-button',newPost));
 
-                        createComment();
-                        likeFunction();
+                        createComment($('form',newPost));
+                        likeFunction($('.like-button',newPost));
 
                         
                     },
@@ -36,17 +36,16 @@
     let newPostDOM = function (i) {
         return `<li id='post-${i._id}'>
         <p>    
-        ${i.content} <a class="like-button" href="/likes/toggle/?id=${i._id}&type=Post"> - ${i.likes.length} <i class="fa-solid fa-thumbs-up"></i> Like</a> <br>
+        ${i.content} <a class="like-button" id="like-${i._id}" href="/likes/toggle/?id=${i._id}&type=Post"> - ${i.likes.length} <i class="fa-solid fa-thumbs-up"></i> Like</a> <br>
             - ${i.user.name}
             
-                <a class="delete-post-button" id=${i._id} href="/posts/destroy/${i._id}"> - Delete Post</a>
+                <a class="delete-post-button" id="${i._id}" href="/posts/destroy/${i._id}"> - Delete Post</a>
                
-            <form action='comments/create' id="new-comment-form" method="post">
+            <form action='comments/create' id="new-comment-form-${i._id}" method="post">
                 <textarea name="content" cols="20" rows="1" placeholder="Add a Comment...." required></textarea>
                 <input type="hidden" name="post" value="${i._id}">
                 <input type="submit" value="Comment">
             </form>
-
             <div id="comment-div-container">
                 <ul id=post-comments-${i._id}>
                    
@@ -97,15 +96,13 @@
     }
 
     // Method to submit form data for new comment using AJAX
-    let createComment = function () {
+    let createComment = function (formLink) {
+
+
+        var element = $(formLink[0]).attr('id');
+        let newCommmentForm=$(`#${element}`);
         
-        let testform = document.querySelectorAll('#new-comment-form')
-
-
-        for (let i = 0; i < testform.length; i++) {
-            let newCommmentForm = $(testform[i]);
-            
-            newCommmentForm.submit(function (event) {
+        newCommmentForm.submit(function (event) {
                 
                 event.preventDefault();
 
@@ -122,7 +119,7 @@
                             notyFunction(data.message);
 
                             deleteComment($('.delete-comment-button',newComment));
-                            likeFunction();
+                            likeFunction($('.like-button',newComment));
 
                         },
                         error: function (error) {
@@ -131,7 +128,6 @@
                     }
                 )
             })
-        }
 
 
     }
@@ -141,9 +137,9 @@
     let newCommentDOM = function (j) {
         return `<li id='comment-${j._id}'>
         <p>
-            Comment - ${j.content} <a class="like-button"  href="/likes/toggle/?id=${j._id}&type=Comment"> - ${j.likes.length} <i class="fa-solid fa-thumbs-up"></i> Like</a> <br>
+            Comment - ${j.content} <a class="like-button" id="like-${j._id}" href="/likes/toggle/?id=${j._id}&type=Comment"> - ${j.likes.length} <i class="fa-solid fa-thumbs-up"></i> Like</a> <br>
             @ ${j.user.name} 
-            <a href="/comments/destroy/${j._id}" id=${j._id} class="delete-comment-button"> - Delete Comment</a>
+            <a href="/comments/destroy/${j._id}" id="${j._id}" class="delete-comment-button"> - Delete Comment</a>
         </p>
     </li> `
     }
@@ -151,7 +147,6 @@
     //   Method to delete comment from DOM
     let deleteComment = function (deleteCommentLink) {
 
-        console.log(deleteCommentLink)
 
         var element = $(deleteCommentLink[0]).attr("id");
         $(`#${element}`).click(function(event)
@@ -176,19 +171,35 @@
   
     //   Method to Like/Unlike Post/Comment from DOM
 
-    let likeFunction = function()
+    let likeFunction = function(likeLink)
     {
-        let likeButtonClick = document.querySelectorAll('.like-button');
 
-        for (var i = 0; i < likeButtonClick.length; i++) {
-            let likeLink = $(likeButtonClick[i]);
-            likeLink.click(function (event) {
+        var element = $(likeLink[0]).attr("id");
+        
+            $(`#${element}`).click(function (event) {
+
                 event.preventDefault();
 
                 $.ajax({
                     type: 'post',
                     url: likeLink.prop('href'),
                     success: function (data) {
+
+                    let likesCount = parseInt($(`#${element}`).attr('data-likes'));
+                    if(!likesCount)
+                    {
+                        likesCount=0;
+                    }
+
+                    if (data.data.deleted == true){
+                        likesCount -= 1;
+                        
+                    }else{
+                        likesCount += 1;
+                    }
+
+                $(`#${element}`).attr('data-likes', likesCount);
+                $(`#${element}`).html(`- ${likesCount} Likes`);
 
                         notyFunction(data.message);
                     },
@@ -198,7 +209,6 @@
                 });
 
             })
-        }
 
     }
 
@@ -212,8 +222,17 @@
         });
     }
 
+    let convertcreateCommentsToAjax = function(){
+        $('#post-div-container>ul>li').each(function(){
+            let self = $(this);
+            let deleteButton = $('form', self);
+            createComment(deleteButton);
 
-    let convertCommentsToAjax = function(){
+        });
+    }
+
+
+    let convertDeleteCommentsToAjax = function(){
         $('#comment-div-container>ul>li').each(function(){
             let self = $(this);
             let deletecommentButton = $('.delete-comment-button', self);
@@ -222,12 +241,29 @@
         });
     }
 
+    let convertLikeCommentsToAjax = function(){
+
+        $('#post-div-container>ul>li').each(function(){
+            let self = $(this);
+            let likeButton = $('.like-button', self);
+            likeFunction(likeButton);
+
+        });
+
+        $('#comment-div-container>ul>li').each(function(){
+            let self = $(this);
+            let likeButton = $('.like-button', self);
+            likeFunction(likeButton);
+
+        });
+    }
+
 
     createPost();
     convertPostsToAjax();
-    createComment();
-    convertCommentsToAjax();
-    likeFunction();
+    convertcreateCommentsToAjax();
+    convertDeleteCommentsToAjax();
+    convertLikeCommentsToAjax();
 
 
 }
