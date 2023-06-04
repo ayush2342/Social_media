@@ -15,12 +15,12 @@
                         $('#post-div-container>ul').prepend(newPost);
                         notyFunction(data.message);
 
+                        deletePost($('.delete-post-button',newPost));
 
-                        deletePost();
                         createComment();
                         likeFunction();
 
-                        // deletePost($('.delete-post-button',newPost))
+                        
                     },
                     error: function (error) {
                         console.log(error.responseText);
@@ -39,7 +39,7 @@
         ${i.content} <a class="like-button" href="/likes/toggle/?id=${i._id}&type=Post"> - ${i.likes.length} <i class="fa-solid fa-thumbs-up"></i> Like</a> <br>
             - ${i.user.name}
             
-                <a class="delete-post-button" href="/posts/destroy/${i._id}"> - Delete Post</a>
+                <a class="delete-post-button" id=${i._id} href="/posts/destroy/${i._id}"> - Delete Post</a>
                
             <form action='comments/create' id="new-comment-form" method="post">
                 <textarea name="content" cols="20" rows="1" placeholder="Add a Comment...." required></textarea>
@@ -63,63 +63,26 @@
 
     //   Method to delete post from DOM
 
-    let deletePost = function () {
-        // $(deletelink).click(function(event)
-        // let element=deletelink[0];
-        // console.log(element)
+    let deletePost = function (deletelink) {
 
-        // element.addEventListener("click",function(event)
-        //     {
-        //     event.preventDefault();
-        //     })
+      
+        var element = $(deletelink[0]).attr("id");
+        $(`#${element}`).click(function(event)
+        {
+            event.preventDefault();
 
-        // $(deletelink).click(function(event)
-        // {
-        //     console.log('test')
-        //     event.preventDefault();
-        // })
-
-        let deleteButtonClick = document.querySelectorAll('.delete-post-button');
-
-        for (var i = 0; i < deleteButtonClick.length; i++) {
-            let deletelink = $(deleteButtonClick[i]);
-            deletelink.click(function (event) {
-                event.preventDefault();
-
-                $.ajax({
-                    type: 'get',
-                    url: deletelink.prop('href'),
-                    success: function (data) {
-                        $(`#post-${data.data.post_id}`).remove();
-                        notyFunction(data.message);
-                    },
-                    error: function (error) {
-                        console.log(error.responseText);
-                    }
-                });
-
-            })
-        }
-
-
-        // $('#post-div-container').on('click', '.delete-post-button', function(event) 
-        // {
-        //     event.preventDefault();
-
-        //     let deleteLink = $(this);
-
-        //     $.ajax({
-        //         type: 'get',
-        //         url: deleteLink.prop('href'),
-        //         success: function(data) {
-        //             $(`#post-${data.data.post_id}`).remove();
-        //             notyFunction(data.message);
-        //         },
-        //         error: function(error) {
-        //             console.log(error.responseText);
-        //         }
-        //     });
-        // });
+            $.ajax({
+                type: 'get',
+                url: deletelink.prop('href'),
+                success: function (data) {
+                    $(`#post-${data.data.post_id}`).remove();
+                    notyFunction(data.message);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        })
 
     }
 
@@ -135,11 +98,15 @@
 
     // Method to submit form data for new comment using AJAX
     let createComment = function () {
+        
         let testform = document.querySelectorAll('#new-comment-form')
+
 
         for (let i = 0; i < testform.length; i++) {
             let newCommmentForm = $(testform[i]);
+            
             newCommmentForm.submit(function (event) {
+                
                 event.preventDefault();
 
                 $.ajax(
@@ -154,7 +121,7 @@
                             $(`#comment-div-container #post-comments-${postbox}`).prepend(newComment);
                             notyFunction(data.message);
 
-                            deleteComment();
+                            deleteComment($('.delete-comment-button',newComment));
                             likeFunction();
 
                         },
@@ -174,39 +141,36 @@
     let newCommentDOM = function (j) {
         return `<li id='comment-${j._id}'>
         <p>
-            Comment - ${j.content} <a class="like-button" href="/likes/toggle/?id=${j._id}&type=Comment"> - ${j.likes.length} <i class="fa-solid fa-thumbs-up"></i> Like</a> <br>
+            Comment - ${j.content} <a class="like-button"  href="/likes/toggle/?id=${j._id}&type=Comment"> - ${j.likes.length} <i class="fa-solid fa-thumbs-up"></i> Like</a> <br>
             @ ${j.user.name} 
-            <a href="/comments/destroy/${j._id}" class="delete-comment-button"> - Delete Comment</a>
+            <a href="/comments/destroy/${j._id}" id=${j._id} class="delete-comment-button"> - Delete Comment</a>
         </p>
     </li> `
     }
 
     //   Method to delete comment from DOM
-    let deleteComment = function () {
-        // $(deleteLink).click(function(event)
+    let deleteComment = function (deleteCommentLink) {
 
-        let deleteButtonClick = document.querySelectorAll('.delete-comment-button');
+        console.log(deleteCommentLink)
 
-        for (var i = 0; i < deleteButtonClick.length; i++) {
-            let deletelink = $(deleteButtonClick[i]);
-            deletelink.click(function (event) {
-                event.preventDefault();
+        var element = $(deleteCommentLink[0]).attr("id");
+        $(`#${element}`).click(function(event)
+        {
+            event.preventDefault();
 
-                $.ajax({
-                    type: 'get',
-                    url: deletelink.prop('href'),
-                    success: function (data) {
+            $.ajax({
+                type: 'get',
+                url: deleteCommentLink.prop('href'),
+                success: function (data) {
 
-                        $(`#comment-${data.data.comment_id}`).remove();
-                        notyFunction(data.message);
-                    },
-                    error: function (error) {
-                        console.log(error.responseText);
-                    }
-                });
-
-            })
-        }
+                    $(`#comment-${data.data.comment_id}`).remove();
+                    notyFunction(data.message);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        })
 
     }
   
@@ -238,11 +202,31 @@
 
     }
 
+    // loop over all the existing posts on the page (when the window loads for the first time) and call the delete post method on delete link of each, also add AJAX (using the class we've created) to the delete button of each
+    let convertPostsToAjax = function(){
+        $('#post-div-container>ul>li').each(function(){
+            let self = $(this);
+            let deleteButton = $(' .delete-post-button', self);
+            deletePost(deleteButton);
+
+        });
+    }
+
+
+    let convertCommentsToAjax = function(){
+        $('#comment-div-container>ul>li').each(function(){
+            let self = $(this);
+            let deletecommentButton = $('.delete-comment-button', self);
+            deleteComment(deletecommentButton);
+
+        });
+    }
+
 
     createPost();
-    deletePost();
+    convertPostsToAjax();
     createComment();
-    deleteComment();
+    convertCommentsToAjax();
     likeFunction();
 
 
