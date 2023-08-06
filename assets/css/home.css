@@ -1,5 +1,6 @@
 body {
-  background-color: blueviolet;
+  background-image: url("https://img.freepik.com/premium-vector/background-popular-social-media-icons-black-white-colors-youtube-instagram-twitter-facebook-whatsapp-pinterest-snapchat-vimeo-google-skype-viber-others_444390-15173.jpg");
+  background-size: cover;
   text-align: left;
 }
 
@@ -10,6 +11,7 @@ body {
 #home-div h1 {
   text-align: center;
   width: 100%;
+  color: white;
 }
 #home-div #feed-posts {
   padding-left: 10px;
